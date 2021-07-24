@@ -34,9 +34,9 @@
                     <div>
                         {% if request.user.profile.neighbourhood == neighbourhood %}
                         <h6 class="exit">
-                            <a href="/" class="btn btn-outline-danger btn-sm mb-2">Leave Neighbourhood</a>
+                            <a href="/" class="btn btn-danger btn-sm mb-2">Leave Neighbourhood</a>
                         </h6>
-                        <p> <a href="/" class="btn btn-outline-success btn-sm">Explore{{user.profile.neighbourhood.name}} Estate</a></p>
+                        <p> <a href="/" class="btn btn-success btn-sm">Explore{{user.profile.neighbourhood.name}} Estate</a></p>
                         {% elif not request.user.profile.neighbourhood %}
                         <a href="{% url 'joinhood' neighbourhood.id%}" class="btn btn-info btn-sm">Join Neighbourhood</a>
                         {% endif %}

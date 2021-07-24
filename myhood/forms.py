@@ -1,4 +1,4 @@
-from myhood.models import Neighbourhood, Profile
+from myhood.models import Business, Neighbourhood, Profile
 from django.contrib.auth.models import User
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
@@ -29,3 +29,4 @@ class UserProfileUpdateForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ['username','email',]
+        
