@@ -9,7 +9,9 @@ from django.contrib import messages
 
 @login_required(login_url='/accounts/login/')
 def index(request):
-    return render(request,'index.html')
+    all_hoods = Neighbourhood.objects.all()
+    all_hoods = all_hoods[::-1]
+    return render(request,'index.html',{'all_hoods': all_hoods,})
 
 def register(request):
     if request.method=="POST":
@@ -54,3 +56,14 @@ def profile(request):
     else:
         user_profile_form = ProfileForm(instance=request.user)
     return render(request, 'profile.html',{"user_profile_form": user_profile_form})    
+
+
+@login_required(login_url='/accounts/login/')
+
+def join_hood(request,id):
+    neighbourhood = get_object_or_404(Neighbourhood, pk=id)
+    request.user.profile.neighbourhood = neighbourhood
+    request.user.profile.save()
+    messages.success(request, 'You have succesfully joined this Neighbourhood .')
+    return redirect('index')    
+

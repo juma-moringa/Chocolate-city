@@ -1,1 +1,50 @@
-<p>welcome to my hood.</p>
+{%extends 'base.html'%}
+{% load bootstrap3%}
+{% load static%}
+{% block content %}
+<div class="container">
+    <p>welcome to my hood.</p>
+    {% for neighbourhood in all_hoods %}
+    <div class="card mb-4">
+        <h3>{{ neighbourhood.neighbourhood_name }}</h3>
+        <div class="row">
+            <div class="col-lg-5 col-md-12 mb-4">
+                <div class="single-news">
+                    <div class="view overlay rounded z-depth-1-half mb-4">
+                        <img style="width:100%;height:260px;" src="{{ neighbourhood.hood_picture.url }}"
+                            class="card-img-top mb-10 img-thumbnail" alt="hood_picture">
+                    </div>
+                    <div>
+                        <h6>{{ neighbourhood.neighbourhood_location }}</h6>
+                        <p><b>{{ neighbourhood.members.count }}</b><b>Members {{neighbourhood.occupants_count}}</b>
+                           </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-8 mb-4">
+                <div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="">
+                                <h3 class="text-center">{{ neighbourhood.neighbourhood_name }} Neighbourhood</h3>
+                                <h5 class="text-center">{{ neighbourhood.description}}</h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        {% if request.user.profile.neighbourhood == neighbourhood %}
+                        <h6 class="exit">
+                            <a href="/" class="btn btn-outline-danger btn-sm mb-2">Leave Neighbourhood</a>
+                        </h6>
+                        <p> <a href="/" class="btn btn-outline-success btn-sm">Explore{{user.profile.neighbourhood.name}} Estate</a></p>
+                        {% elif not request.user.profile.neighbourhood %}
+                        <a href="{% url 'joinhood' neighbourhood.id%}" class="btn btn-info btn-sm">Join Neighbourhood</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

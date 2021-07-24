@@ -9,6 +9,7 @@ class Neighbourhood(models.Model):
     hood_picture= CloudinaryField('image')
     neighbourhood_name = models.CharField(max_length=100,blank=False)
     neighbourhood_location = models.CharField(max_length=100, blank=False)
+    description = models.TextField()
     occupants_count = models.IntegerField()
     admin = models.ForeignKey(User,related_name='Hood_admin', null=True,on_delete=models.CASCADE)
 
@@ -42,8 +43,8 @@ class Neighbourhood(models.Model):
 
 # 2. Userprofile
 class Profile(models.Model):
-    profile_picture= CloudinaryField('image')
-    user = models.OneToOneField(User, on_delete=models.CASCADE, default='0')
+    profile_picture= CloudinaryField('image', default='default.png')
+    user = models.OneToOneField(User, related_name='profile',on_delete=models.CASCADE)
     bio = models.TextField()  
     neighbourhood_id = models.ForeignKey(Neighbourhood, 
     related_name='hood_members', 
