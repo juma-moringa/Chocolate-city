@@ -22,8 +22,11 @@ class Neighbourhood(models.Model):
         self.delete()
 
     @classmethod
-    def find_neighbourhood(cls, neighbourhood_id):
-        return cls.objects.filter(id=neighbourhood_id) 
+    # def find_neighbourhood(cls, neighbourhood_id):
+    #     return cls.objects.filter(id=neighbourhood_id) 
+    def find_neighbourhood(cls,search_term):
+        myhood = cls.objects.filter(name__icontains = search_term)
+        return myhood
 
     def update_neighborhood(self):
         neighbourhood_name = self.name
@@ -63,7 +66,7 @@ class Business(models.Model):
     user= models.ForeignKey(Profile,related_name='business_owner',on_delete=models.CASCADE,)   
     neighbourhood_id= models.ForeignKey(Neighbourhood,related_name='business',on_delete=models.CASCADE)
     business_email = models.CharField(max_length=50,blank=False)
-    
+
     # profile methods
     def __str__(self):
         return self.business_name
