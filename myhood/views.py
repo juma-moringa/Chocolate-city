@@ -24,7 +24,6 @@ def register(request):
         form= SignUpForm()
     return render(request, 'registration/registration_form.html', {"form":form})  
 
-
 @login_required(login_url='/accounts/login/')
 def create_new_neighbourhood(request):
     if request.method == 'POST':
