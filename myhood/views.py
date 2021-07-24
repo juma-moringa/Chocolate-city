@@ -1,5 +1,6 @@
-from myhood.forms import NewNeighbourHoodForm, SignUpForm
-from django.shortcuts import redirect, render
+from myhood.models import Neighbourhood
+from myhood.forms import NewNeighbourHoodForm, ProfileForm, SignUpForm
+from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -40,4 +41,16 @@ def create_new_neighbourhood(request):
             return redirect('index')
     else:
         form = NewNeighbourHoodForm()
-    return render(request, 'mynewhood.html', {'form':form})    
+    return render(request, 'mynewhood.html', {'form':form})   
+
+
+@login_required(login_url='/accounts/login/')    
+def profile(request):
+    if request.method == 'POST':
+        user_profile_form = ProfileForm(request.POST, request.FILES, instance=request.user)
+        if  user_profile_form.is_valid():
+            user_profile_form.save()
+            return redirect('home')
+    else:
+        user_profile_form = ProfileForm(instance=request.user)
+    return render(request, 'profile.html',{"user_profile_form": user_profile_form})    

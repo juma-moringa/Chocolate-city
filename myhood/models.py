@@ -1,11 +1,12 @@
 from django.contrib.auth.models import User
 from django.db import models
 from django.db.models.deletion import CASCADE
-
+from cloudinary.models import CloudinaryField
 # Create your models here.
 
 # 1. myhood class
 class Neighbourhood(models.Model):
+    hood_picture= CloudinaryField('image')
     neighbourhood_name = models.CharField(max_length=100,blank=False)
     neighbourhood_location = models.CharField(max_length=100, blank=False)
     occupants_count = models.IntegerField()
@@ -41,6 +42,7 @@ class Neighbourhood(models.Model):
 
 # 2. Userprofile
 class Profile(models.Model):
+    profile_picture= CloudinaryField('image')
     user = models.OneToOneField(User, on_delete=models.CASCADE, default='0')
     bio = models.TextField()  
     neighbourhood_id = models.ForeignKey(Neighbourhood, 
