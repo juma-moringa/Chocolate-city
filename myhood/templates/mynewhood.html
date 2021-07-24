@@ -1,0 +1,16 @@
+{%include 'base.html'%}
+{% load bootstrap3 %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <h4 class="text-center">Add a Neighbourhood</h4>
+            <form action="{%url 'mynewhood'%}" method="post" enctype="multipart/form-data" novalidate>
+                {% csrf_token %}
+                {% bootstrap_form form %}
+                <button class="btn btn-info btn-sm">Add your Hood</button>
+            </form><br>
+        </div>
+    </div>
+</div>
+{% endblock %}
