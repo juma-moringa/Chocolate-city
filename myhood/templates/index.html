@@ -4,31 +4,32 @@
 {% block content %}
 <div class="container">
     <p>welcome to my hood.</p>
-    {% for hood in hoods %}
+    {% for myhood in myhoods %}
         <div class="col-lg-4">
             <div>
-                <div class="row" style="padding-top: 1%">
+                <div class="row">
                     <div class="col-md-12">
-                        <h4 style="font-weight:600; text-decoration: none; ">Name: 
-                        {{hood.hood_name}}</4>
+                        <h4>Hood name: {{myhood.hood_name}}</4>
                     </div>
                 </div>
-               
-                <div class="">
-                        <img src="{{hood.hood_photo.url}}" class="img-thumbnail" alt=""
-                            style="width:100%;width:100%">
+                <div>
+                <img style="width:100%;height:260px;"  src="{{myhood.hood_photo.url}}" class="img-thumbnail" alt="">
                 </div>
                 <br>
-                <div class="row" style="font-size:10pt;">
-                    <div class="col-md-6" style="padding-bottom: 2%;font-weight:600;"> Location: {{hood.hood_location}}
+                <div class="row" style="font-size:14px;">
+                    <div class="col-md-6"> Population: 
+                    </div>
+                </div>
+                <div class="row" style="font-size:14px;">
+                    <div class="col-md-6"> Location: {{myhood.hood_location}}
                     </div>
                 </div>
                 <div style="padding-top:1%;padding-bottom:1%">
-                    {%if request.user.profile.neighbourhood == hood %}
-                    <a class="btn btn-info btn-small" href="/">Explore {{hood.hood_name}} </a>
-                    <a class="btn btn-danger" href="/">Leave {{hood.hood_name}}</a>
+                    {%if request.user.profile.neighbourhood == myhood %}
+                    <a class="btn btn-info" href="/">Explore {{myhood.hood_name}} </a>
+                    <a class="btn btn-danger" href="{% url 'leavehood' myhood.id %}">Leave {{myhood.hood_name}}</a>
                     {%elif not request.user.profile.neighbourhood%}
-                    <a class="btn btn-default" href="{%url 'joinhood' hood.id%}">Join {{hood.hood_name}}</a>
+                    <a class="btn btn-info" href="{%url 'joinhood' myhood.id%}">Join {{myhood.hood_name}}</a>
                     {%endif%}
                 </div>
             </div>
