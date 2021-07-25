@@ -43,12 +43,11 @@
         {% for busines in business %}
         <div class="col-md-4">
             <div class="card-body">
-                <h5><b>Business name</b>:{{busines.business_name}}
+                <h5><b>Business name</b>:{{busines.name}}
                     <p style="font-size: 14px;"> <b>Email</b>: {{busines.business_email}}</p>  
                 </h5>
                 <p>{{ busines.business_description }}</p>
-                <p><b>Owner</b>:{{ busines.user.user.username}}</p>
-                
+                <p><b> Business Owner</b>:{{ busines.user.user.username}}</p>   
             </div> </b>
         </div>
         {% endfor %}

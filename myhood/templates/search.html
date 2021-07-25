@@ -1,0 +1,30 @@
+{%extends 'base.html'%}
+{% block content %}
+<div class="container" style="margin-top:100px;">
+    <div class="row">
+        <div class="col md-3"></div>
+        {% if found_businesses %}
+        <h4 class="text-center" >Found {{ found_businesses|length }} businesses with the searched term :<b>{{message}}</b></h4>
+        {% else %}
+        <h4 class="text-center" style="color:black"> Found 0 businesses for search term {{message}} <br> <br>
+        </h4>
+        <hr>
+        {% endif %}
+    </div>
+    <div class="row text-center">
+        {% for business in found_businesses %}
+        <hr>
+        <div class="col-md-4">
+            <div class="card" >
+                <div class="card-header">
+                   <b> Name:{{business.name}}</b>
+                </div>
+                    <p>Owner : {{ business.user.user.username}}</p>
+                    <p>Contact info: <a href=""> {{business.business_email}}</a></p>
+            </div>
+            <br>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

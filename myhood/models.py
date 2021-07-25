@@ -68,7 +68,7 @@ class Profile(models.Model):
         Profile.objects.get(user_id=id)
 # 3. Business class
 class Business(models.Model): 
-    business_name= models.CharField(max_length=100, blank=False) 
+    name= models.CharField(max_length=100, blank=False) 
     user= models.ForeignKey(Profile,related_name='business_owner',on_delete=models.CASCADE,)   
     neighbourhood_id= models.ForeignKey(Neighbourhood,related_name='business',on_delete=models.CASCADE)
     business_email = models.CharField(max_length=50,blank=False)
@@ -77,7 +77,7 @@ class Business(models.Model):
 
     # profile methods
     def __str__(self):
-        return self.business_name
+        return self.name
 
     def save_business(self):
         self.save()
@@ -92,6 +92,10 @@ class Business(models.Model):
     def find_business(cls,business_id):
         business = cls.objects.get(id = business_id)
         return business
+    @classmethod
+    def search_by_name(cls,search_term):
+    	businesses = cls.objects.filter(name__icontains=search_term)
+    	return businesses
 
     def update_business(self):
         business_name = self.name

@@ -93,7 +93,19 @@ def single_neighbourhood(request,id):
             bizform.neighbourhood = neighbourhood
             bizform.user = request.user.profile
             bizform.save()
-            return redirect('single-hood', id.id)
+            return redirect('single-hood', id)
     else:
         form = NewBusinessForm()
     return render(request, 'hood_details.html', {'neighbourhood': neighbourhood,'form':form ,'business':business})
+
+
+@login_required(login_url='/accounts/login/')
+def search_business(request):
+    if 'name' in request.GET and request.GET["name"]:
+        search_term = request.GET.get("name")
+        found_businesses = Business.search_by_name(search_term)
+        message = f"{search_term}"
+        return render(request, 'search.html',{"found_businesses":found_businesses,"message":message})
+    else:
+        message = "You haven't searched for any term"
+        return render(request, 'search.html',{"message":message})

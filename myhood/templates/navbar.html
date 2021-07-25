@@ -200,9 +200,9 @@
 				<li class="active"><a href="/">Home</a></li>
                 <li class="active"><a href="/">About</a></li>
 			</ul>
-			<form class="navbar-form form-inline" action="/">
+			<form class="navbar-form form-inline" action="{% url 'search' %}">
 				<div class="input-group search-box">
-					<input type="text" id="search" class="form-control" name="search_title"
+					<input type="text" id="search" class="form-control" name="name"
 						placeholder="Search for business">
 					<span class="input-group-addon" ><i class="material-icons" type="submit">&#xE8B6;</i></span>
 				</div>

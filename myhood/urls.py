@@ -16,6 +16,7 @@ urlpatterns=[
     path('leavehood/<id>', views.leave_neighbourhood, name='leavehood'),
     path('new_business/',views.new_business,name='add_business'),
     path('single_hood/<id>', views.single_neighbourhood, name='single-hood'),
+    url(r'^searched/', views.search_business, name='search'),
     
 ]
 if settings.DEBUG:
