@@ -14,7 +14,8 @@ urlpatterns=[
     url('newhood/', views.create_new_neighbourhood, name='mynewhood'),
     path('joinhood/<id>', views.join_neighbourhood, name='joinhood'),
     path('leavehood/<id>', views.leave_neighbourhood, name='leavehood'),
-    url(r'^new_business/$',views.new_business,name='add_business'),
+    path('new_business/',views.new_business,name='add_business'),
+    path('single_hood/<id>', views.single_neighbourhood, name='single-hood'),
     
 ]
 if settings.DEBUG:

@@ -72,6 +72,8 @@ class Business(models.Model):
     user= models.ForeignKey(Profile,related_name='business_owner',on_delete=models.CASCADE,)   
     neighbourhood_id= models.ForeignKey(Neighbourhood,related_name='business',on_delete=models.CASCADE)
     business_email = models.CharField(max_length=50,blank=False)
+    description = models.TextField(max_length=500, blank=True)
+
 
     # profile methods
     def __str__(self):
