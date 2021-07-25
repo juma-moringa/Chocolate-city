@@ -3,6 +3,7 @@ from . import views
 from django.conf.urls.static import static
 from django.contrib.auth import views as auth_views
 from django.conf import settings
+from django.urls import path
 
 urlpatterns=[
     url(r'^$',views.index, name='index'),
@@ -10,9 +11,11 @@ urlpatterns=[
     url('login/',auth_views.LoginView.as_view(), name='login'),
     url('logout/', auth_views.LogoutView.as_view(template_name='registration/logout.html'), name='logout'),
     url('profile/',views.profile, name='profile'), 
+    # url('all-hoods/',views.neighbourhoods,name='neighbourhood'),
     url('newhood/', views.create_new_neighbourhood, name='mynewhood'),
-    url('^join/(?P<id>\d+)$',views.join_hood, name='joinhood'),
-    
+    url('singlehood/<hood_id>', views.single_neighbourhood, name='singlehood'),
+    path('joinhood/<id>', views.joinhood, name='joinhood'),
+   
    
 ]
 if settings.DEBUG:

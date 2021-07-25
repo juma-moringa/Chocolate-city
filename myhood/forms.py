@@ -21,12 +21,17 @@ class NewNeighbourHoodForm(forms.ModelForm):
 class ProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
-        exclude = [ 'user']
+        exclude = [ 'user','neighbourhood']
      
 #update profile form
 class UserProfileUpdateForm(forms.ModelForm):
     email = forms.EmailField()
     class Meta:
         model = User
-        fields = ['username','email',]
+        fields = ['username','email', ]
         
+
+class NewBusinessForm(forms.ModelForm):
+    class Meta:
+        model = Business
+        exclude = ('user', 'neighbourhood')
