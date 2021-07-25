@@ -8,11 +8,12 @@ from django.dispatch import receiver
 
 # 1. myhood class
 class Neighbourhood(models.Model):
-    hood_photo = CloudinaryField('image', default='photo')
-    hood_name = models.CharField(max_length=200)
-    hood_location = models.CharField(max_length=200)
-    hood_description = models.TextField(max_length=500, blank=True)
     admin = models.ForeignKey(User, on_delete=models.CASCADE,related_name='admin')
+    hood_photo = CloudinaryField('image', default='image')
+    hood_name = models.CharField(max_length=60)
+    hood_location = models.CharField(max_length=60)
+    hood_description = models.TextField(max_length=150, blank=True)
+    
 
     def __str__(self):
         return self.hood_name

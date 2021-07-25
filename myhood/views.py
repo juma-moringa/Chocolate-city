@@ -68,3 +68,20 @@ def leave_neighbourhood(request, id):
     request.user.profile.neighbourhood = None
     request.user.profile.save()
     return redirect('index')
+
+@login_required(login_url='/accounts/login/')
+def new_business(request):
+    current_user = request.user
+    if request.method == 'POST':
+        form = NewBusinessForm(request.POST, request.FILES, instance=request.user)
+        if form.is_valid():
+            new_business = form.save(commit=False)
+            new_business.user = current_user
+            new_business.neighborhood=request.user.neighborhood
+            assert isinstance(new_business.save, object)
+            new_business.save()
+            messages.success(request, "New Business Created")
+            return redirect('index')
+    else:
+        form = NewBusinessForm()
+    return render(request, 'business.html',{"form":form})    
