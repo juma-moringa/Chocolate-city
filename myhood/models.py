@@ -35,12 +35,6 @@ class Neighbourhood(models.Model):
         hood_name = self.hood_name
         self.hood_name = hood_name
 
-    @classmethod
-    def update_occupants(cls,neighbourhood_id):
-        member = cls.objects.get(id=neighbourhood_id)
-        new_count = member.occupants_count + 1
-        cls.objects.filter(id = neighbourhood_id).update(occupants_count = new_count) 
-    
 # 2. Userprofile
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -53,11 +47,16 @@ class Profile(models.Model):
     def __str__(self):
         return self.user
 
-    @receiver(post_save, sender=User)
-    def update_user_profile(sender, instance, created, **kwargs):
-        if created:
-            Profile.objects.create(user=instance)
-        instance.profile.save()
+    @classmethod
+    def get_profile(cls):
+        profile = Profile.objects.all()
+        return profile
+    
+    # @receiver(post_save, sender=User)
+    # def update_user_profile(sender, instance, created, **kwargs):
+    #     if created:
+    #         Profile.objects.create(user=instance)
+    #     instance.profile.save()
 
     def save_profile(self):
         self.save()
@@ -75,7 +74,6 @@ class Business(models.Model):
     neighbourhood_id= models.ForeignKey(Neighbourhood,related_name='business',on_delete=models.CASCADE)
     business_email = models.CharField(max_length=50,blank=False)
     description = models.TextField(max_length=500, blank=True)
-
 
     # profile methods
     def __str__(self):
@@ -98,10 +96,7 @@ class Business(models.Model):
     def search_by_name(cls,search_term):
     	businesses = cls.objects.filter(name__icontains=search_term)
     	return businesses
-
-    def update_business(self):
-        business_name = self.name
-        self.name = business_name     
+  
 
 # 4. post class
 class Post(models.Model):
