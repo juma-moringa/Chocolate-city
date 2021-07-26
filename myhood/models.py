@@ -52,11 +52,7 @@ class Profile(models.Model):
         profile = Profile.objects.all()
         return profile
     
-    @receiver(post_save, sender=User)
-    def update_user_profile(sender, instance, created, **kwargs):
-        if created:
-            Profile.objects.create(user=instance)
-        instance.profile.save()
+    
 
     def save_profile(self):
         self.save()
@@ -115,3 +111,11 @@ class Post(models.Model):
 
     def delete_post(self):
         self.delete()        
+
+
+
+#    @receiver(post_save, sender=User)
+#     def update_user_profile(sender, instance, created, **kwargs):
+#         if created:
+#             Profile.objects.create(user=instance)
+#         instance.profile.save()     
