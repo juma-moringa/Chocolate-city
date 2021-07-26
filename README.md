@@ -6,7 +6,7 @@
 
 ## Description
 
-Neighbourhood is a Django website application that allows users to be updated about everything happening in your neighborhood
+Neighbourhood is a Django website application that allows users to be updated about everything happening in their neighborhood
 
 ## Set Up and Installations
 
