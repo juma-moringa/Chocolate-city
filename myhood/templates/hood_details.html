@@ -14,7 +14,7 @@
                 </div>
                 <div class="card-content">
                     <h5 class="mb-3 p-2">
-                        <b class="text-dark">About {{neighbourhood.hood_name}}</b>
+                        <b class="text-dark"> All about {{neighbourhood.hood_name}}</b>
                     </h5>
                     <p class="card-text">{{neighbourhood.description}}</p>
                 </div>
@@ -22,22 +22,24 @@
                     <h5 class="mb-3 p-2">
                         <b class="text-dark"> Emergency Contact Informations</b>
                     </h5>
+                    <br>
                     <p class="card-text">
-                        <h5 class="">Hospital Department</h5>
-                        <p></p>
-                        <p></p>
-                        <h5 class="">Police Department</h5>
-                        <p>911</p>
-                        <p>999</p>
-                        <h5 class="">Fire Department</h5>
-                        <p></p>
-                        <p></p>
+                        <b><h5>Health Department</h5></b> 
+                        <p>   -Tel No. +01003333451</p>
+                        <p>   -Tel No. +01003333450</p>
+                        <b><h5>Police Department</h5></b>
+                        <p>   -911</p>
+                        <p>   -999</p>
+                        <b><h5>Fire Department</h5></b>
+                        <p>   -Tel No. +01003333451</p>
+                        <p>   -Tel No. +01003333450</p>
                     </p>
                 </div>
             </div>
         </div>
     </div>
-    <a href="{%url 'add_business'%}" class="btn btn-sm btn-success mb-4 mr-4">New
+    
+    <a href="{%url 'business' neighbourhood.id%}" class="btn btn-sm btn-success mb-4 mr-4">New
         Business</a>
     <div class="row">
         {% for busines in business %}
@@ -48,10 +50,23 @@
                 </h5>
                 <p>{{ busines.business_description }}</p>
                 <p><b> Business Owner</b>:{{ busines.user.user.username}}</p>   
+            </div></b>
+        </div>
+        {% endfor %}
+    </div>
+    <div class=" container row">
+        <a href="{%url 'post' neighbourhood.id%}" class="btn btn-sm btn-success mb-4 mr-4">New
+            Post</a>
+        <h4>Latest {{neighbourhood.hood_name}} Hood news</h4>
+        {% for post in posts %}
+        <div class="col-md-4">
+            <div class="card-body">
+                <h5><b>Post </b>:{{post.title}}
+                    <p style="font-size: 14px;"> <b>Message</b>: {{post.post}}</p>  
+                </h5> 
             </div> </b>
         </div>
         {% endfor %}
     </div>
 </div>
-
 {% endblock %}

@@ -1,5 +1,5 @@
 from myhood.models import Business, Neighbourhood, Post, Profile
-from myhood.forms import NewBusinessForm, NewNeighbourHoodForm, ProfileForm, SignUpForm
+from myhood.forms import NewBusinessForm, NewNeighbourHoodForm, PostForm, ProfileForm, SignUpForm
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
@@ -65,27 +65,44 @@ def leave_neighbourhood(request, id):
     request.user.profile.save()
     return redirect('index')
 
+
 @login_required(login_url='/accounts/login/')
-def new_business(request):
-    current_user = request.user
-    profile= Profile.objects.get_or_create(user=request.user)
+def create_post(request, id):
+    neighbourhood = Neighbourhood.objects.get(id=id)
     if request.method == 'POST':
-        form = NewBusinessForm(request.POST, request.FILES, instance=request.user)
+        form = PostForm(request.POST)
         if form.is_valid():
-            new_business = form.save(commit=False)
-            new_business.user = current_user
-            new_business.neighborhood=request.user.profile
-            assert isinstance(new_business.save, object)
-            new_business.save()
-            return redirect('index')
+            post = form.save(commit=False)
+            post.neighbourhood = neighbourhood
+            post.user = request.user.profile
+            post.save()
+            return redirect('single-hood', id)
     else:
-        form = NewBusinessForm()
-    return render(request, 'business.html',{"form":form})    
+        form = PostForm()
+    return render(request, 'post.html', {'form': form})
+
+@login_required(login_url='/accounts/login/')
+def create_business(request, id):
+    neighbourhood = Neighbourhood.objects.get(id=id)
+    if request.method == 'POST':
+        form = NewBusinessForm(request.POST)
+        if form.is_valid():
+            biz = form.save(commit=False)
+            biz.neighbourhood = neighbourhood
+            biz.user = request.user.profile
+            biz.save()
+            return redirect('single-hood', id)
+    else:
+        form =NewBusinessForm()
+    return render(request, 'business.html', {'form': form})
+
+  
 
 @login_required(login_url='/accounts/login/')
 def single_neighbourhood(request,id):
     neighbourhood = Neighbourhood.objects.get(id=id)
     business = Business.objects.filter(neighbourhood_id=id)
+    posts = Post.objects.filter(neighbourhood=neighbourhood)
     if request.method == 'POST':
         form = NewBusinessForm(request.POST)
         if form.is_valid():
@@ -96,7 +113,7 @@ def single_neighbourhood(request,id):
             return redirect('single-hood', id)
     else:
         form = NewBusinessForm()
-    return render(request, 'hood_details.html', {'neighbourhood': neighbourhood,'form':form ,'business':business})
+    return render(request, 'hood_details.html', { 'posts': posts,'neighbourhood': neighbourhood,'form':form ,'business':business})
 
 
 @login_required(login_url='/accounts/login/')

@@ -70,7 +70,7 @@ class Profile(models.Model):
 
 # 3. Business class
 class Business(models.Model): 
-    name= models.CharField(max_length=100, blank=False) 
+    name = models.CharField(max_length=100, blank=False) 
     user= models.ForeignKey(Profile,related_name='business_owner',on_delete=models.CASCADE,)   
     neighbourhood_id= models.ForeignKey(Neighbourhood,related_name='business',on_delete=models.CASCADE)
     business_email = models.CharField(max_length=50,blank=False)
