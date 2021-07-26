@@ -30,7 +30,6 @@ class UserProfileUpdateForm(forms.ModelForm):
         model = User
         fields = ['username','email', ]
         
-
 class PostForm(forms.ModelForm):
     class Meta:
         model = Post

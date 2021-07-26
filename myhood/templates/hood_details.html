@@ -38,12 +38,12 @@
             </div>
         </div>
     </div>
-    
-    <a href="{%url 'business' neighbourhood.id%}" class="btn btn-sm btn-success mb-4 mr-4">New
+    <a  style="margin-top: 40px;" href="{%url 'business' neighbourhood.id%}" class="btn btn-sm btn-success mb-4 mr-4">New
         Business</a>
+        <h4>Available businesses</h4>
     <div class="row">
         {% for busines in business %}
-        <div class="col-md-4">
+        <div class="col-md-6">
             <div class="card-body">
                 <h5><b>Business name</b>:{{busines.name}}
                     <p style="font-size: 14px;"> <b>Email</b>: {{busines.business_email}}</p>  
