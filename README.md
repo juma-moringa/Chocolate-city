@@ -69,7 +69,7 @@ Install  all dependancies that will make the app run/function
 
 ### Live Link
 
-***[View Live Site.]()***
+***[View Live Site.](https://chocolatecity.herokuapp.com/)***
 
 ### License
 
