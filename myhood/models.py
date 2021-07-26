@@ -17,6 +17,7 @@ class Neighbourhood(models.Model):
 
     def __str__(self):
         return self.hood_name
+
     def create_neighbourhood(self):
         self.save()  
 
@@ -50,7 +51,7 @@ class Profile(models.Model):
     neighbourhood = models.ForeignKey(Neighbourhood, on_delete=models.CASCADE, blank=True, null=True)
 
     def __str__(self):
-        return self.user.username
+        return self.user
 
     @receiver(post_save, sender=User)
     def update_user_profile(sender, instance, created, **kwargs):
@@ -66,6 +67,7 @@ class Profile(models.Model):
 
     def update_profile(cls, id):
         Profile.objects.get(user_id=id)
+
 # 3. Business class
 class Business(models.Model): 
     name= models.CharField(max_length=100, blank=False) 
@@ -101,15 +103,17 @@ class Business(models.Model):
         business_name = self.name
         self.name = business_name     
 
-
+# 4. post class
 class Post(models.Model):
     title = models.CharField(max_length=60, null=True)
     post = models.TextField()
     user = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='postowner')
     neighbourhood = models.ForeignKey(Neighbourhood, on_delete=models.CASCADE, related_name='hood_post')
    
+
+   # post methods
     def __str__(self):
-        return f'{self.title} Post'    
+        return self.title    
     
     def save_post(self):
         self.save()
