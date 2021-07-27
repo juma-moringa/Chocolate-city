@@ -10,12 +10,10 @@ from django.contrib import messages
 @login_required(login_url='/accounts/login/')
 def index(request):
     myhoods = Neighbourhood.objects.all()
-    myhoods = myhoods[::-1]
     return render(request,'index.html',{'myhoods': myhoods})
 
-
+#registration function
 def register(request):
-    
     if request.method == 'POST':
         form = SignUpForm(request.POST)
         if form.is_valid():
@@ -29,6 +27,7 @@ def register(request):
         form = SignUpForm()
     return render(request, 'registration/registration_form.html', {'form': form})
 
+#new hood creation
 @login_required(login_url='/accounts/login/')
 def create_new_neighbourhood(request):
     if request.method == 'POST':
@@ -40,8 +39,9 @@ def create_new_neighbourhood(request):
             return redirect('index')
     else:
         form = NewNeighbourHoodForm()
-    return render(request, 'mynewhood.html', {'form':form})   
+    return render(request, 'mynewhood.html', {'form':form})
 
+# user creation
 @login_required(login_url='/accounts/login/')    
 def profile(request):
     if request.method == 'POST':
@@ -53,6 +53,7 @@ def profile(request):
         user_profile_form = ProfileForm(instance=request.user)
     return render(request, 'profile.html',{"user_profile_form": user_profile_form})    
 
+#joining a hood
 @login_required(login_url='/accounts/login/')
 def join_neighbourhood(request, id):
     hood = get_object_or_404(Neighbourhood, id=id)
@@ -60,6 +61,7 @@ def join_neighbourhood(request, id):
     request.user.profile.save()
     return redirect('index')
 
+#leave a hood
 @login_required(login_url='/accounts/login/')
 def leave_neighbourhood(request, id):
     hood = get_object_or_404(Neighbourhood, id=id)
@@ -67,7 +69,7 @@ def leave_neighbourhood(request, id):
     request.user.profile.save()
     return redirect('index')
 
-
+# creation of a new post
 @login_required(login_url='/accounts/login/')
 def create_post(request, id):
     neighbourhood = Neighbourhood.objects.get(id=id)
@@ -78,11 +80,12 @@ def create_post(request, id):
             post.neighbourhood = neighbourhood
             post.user = request.user.profile
             post.save()
-            return redirect('single-hood', id)
+            return redirect('single-hood',id)
     else:
         form = PostForm()
-    return render(request, 'post.html', {'form': form})
+    return render(request,'post.html',{'form':form})
 
+#creation of a new business
 @login_required(login_url='/accounts/login/')
 def create_business(request, id):
     neighbourhood = Neighbourhood.objects.get(id=id)
@@ -96,10 +99,10 @@ def create_business(request, id):
             return redirect('single-hood', id)
     else:
         form =NewBusinessForm()
-    return render(request, 'business.html', {'form': form})
+    return render(request, 'business.html',{'form': form})
 
   
-
+# view a single hood
 @login_required(login_url='/accounts/login/')
 def single_neighbourhood(request,id):
     neighbourhood = Neighbourhood.objects.get(id=id)
@@ -112,19 +115,19 @@ def single_neighbourhood(request,id):
             bizform.neighbourhood = neighbourhood
             bizform.user = request.user.profile
             bizform.save()
-            return redirect('single-hood', id)
+            return redirect('single-hood',id)
     else:
         form = NewBusinessForm()
-    return render(request, 'hood_details.html', { 'posts': posts,'neighbourhood': neighbourhood,'form':form ,'business':business})
+    return render(request, 'hood_details.html',{'posts': posts,'neighbourhood':neighbourhood,'form':form ,'business':business})
 
-
+#search for a business in a single hood
 @login_required(login_url='/accounts/login/')
 def search_business(request):
     if 'name' in request.GET and request.GET["name"]:
         search_term = request.GET.get("name")
-        found_businesses = Business.search_by_name(search_term)
+        found_business = Business.search_by_name(search_term)
         message = f"{search_term}"
-        return render(request, 'search.html',{"found_businesses":found_businesses,"message":message})
+        return render(request, 'search.html',{"found_business":found_business,"message":message})
     else:
-        message = "You haven't searched for any term"
+        message = "No matches found"
         return render(request, 'search.html',{"message":message})
