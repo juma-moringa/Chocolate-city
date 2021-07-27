@@ -1,6 +1,6 @@
 from myhood.models import Business, Neighbourhood, Post, Profile
 from myhood.forms import NewBusinessForm, NewNeighbourHoodForm, PostForm, ProfileForm, SignUpForm
-from django.shortcuts import get_object_or_404, redirect, render
+from django.shortcuts import get_object_or_404, redirect,render
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages

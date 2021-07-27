@@ -15,7 +15,7 @@ urlpatterns=[
     path('joinhood/<id>', views.join_neighbourhood, name='joinhood'),
     path('leavehood/<id>', views.leave_neighbourhood, name='leavehood'),
     path('single_hood/<id>', views.single_neighbourhood, name='single-hood'),
-    url(r'^searched/', views.search_business, name='search'),
+    url('searched/', views.search_business, name='search'),
     path('<id>/post/', views.create_post, name='post'),
     path('<id>/business/', views.create_business, name='business'),
     
