@@ -1,4 +1,4 @@
-# NEIGHBOURHOOD
+### NEIGHBOURHOOD
 ### ***Chocolate city***
 
 ## Author
@@ -60,7 +60,7 @@ Install  all dependancies that will make the app run/function
     - HTML5
     - Django 3.2.5
     - Bootstrap 3
-    - Heroku
+    - Django-Heroku
     - Postgresql
     - GIT
 
